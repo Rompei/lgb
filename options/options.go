@@ -12,6 +12,7 @@ type Options struct {
 	Debug             bool   `short:"d" long:"debug" description:"Debug mode"`
 	Table             bool   `short:"t" long:"table" description:"View type"`
 	Speed             bool   `short:"s" long:"speed" description:"Spead mode"`
+	Chaos             bool   `short:"c" long:"chaos" description:"Chaos mode"`
 	ConsumerKey       string `long:"consumer-key" description:"Twitter consumer key"`
 	ConsumerSecret    string `long:"consumer-secret" description:"Twitter consumer secret"`
 	AccessToken       string `long:"access-token" description:"Twitter access token"`

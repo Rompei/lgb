@@ -26,8 +26,12 @@ Application Options:
   -d, --debug                Debug mode
   -t, --table                View type
   -s, --speed                Spead mode
+  -c, --chaos                Chaos mode
       --consumer-key=        Twitter consumer key
       --consumer-secret=     Twitter consumer secret
       --access-token=        Twitter access token
       --access-token-secret= Twitter access token secret
+
+Help Options:
+  -h, --help                 Show this help message
 ```

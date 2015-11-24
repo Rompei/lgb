@@ -23,6 +23,7 @@ type Game struct {
 	debug      bool
 	isTable    bool
 	isSpeed    bool
+	isChaos    bool
 }
 
 // GameStatus object
@@ -58,6 +59,9 @@ func (g *Game) InitGame(opts *options.Options) error {
 
 	// スピード
 	g.isSpeed = opts.Speed
+
+	// カオスモード
+	g.isChaos = opts.Chaos
 
 	// ゲーム情報表示
 	g.showGameInfo(opts)
@@ -106,7 +110,6 @@ func (g *Game) StartGame(resultCh chan []string) {
 		g.field.Reset()
 		g.showGameStatus()
 		g.field.DrawWorld(g.isTable)
-		g.field.Reset()
 		if !g.isSpeed {
 			time.Sleep(1500 * time.Millisecond)
 		}
@@ -151,11 +154,24 @@ func (g *Game) step() {
 					nextField.Points[y][x] = g.field.Points[y][x]
 					continue
 				}
-				tweet := g.getTweets(1)
+				tweet := g.getTweets(1)[0]
 				if g.debug {
-					emoji.Printf(":baby:Points[%v][%v] generated and Fetched tweet: %v\n", x, y, tweet[0])
+					emoji.Printf(":baby:Points[%v][%v] generated and Fetched tweet: %v\n", x, y, tweet)
 				}
-				nextField.AddPoint(x, y, tweet[0])
+				if g.isChaos {
+					crossedTweet, err := g.field.CrossParents(x, y, tweet)
+					if err != nil {
+						panic(err)
+					}
+					if g.debug {
+						emoji.Printf(":baby:Points[%v][%v] generated and Crossed tweet: %v\n", x, y, crossedTweet)
+					}
+					nextField.AddPoint(x, y, crossedTweet)
+					g.gameStatus.BornNum++
+					g.finishFlag = false
+					continue
+				}
+				nextField.AddPoint(x, y, tweet)
 				g.gameStatus.BornNum++
 				g.finishFlag = false
 			} else {
@@ -193,12 +209,15 @@ func (g *Game) mutation(nextField *field.Field, x, y int) {
 
 func (*Game) showGameInfo(opts *options.Options) {
 	emoji.Println(":bell::bell::bell:Game Info:bell::bell::bell::")
-	emoji.Printf(":seedling:Initial Alive Rate: %v/100\n", opts.AliveRate)
+	emoji.Printf(":seedling:Initial Alive Rate: %v%\n", opts.AliveRate)
 	emoji.Printf(":family:Reguration of Generations: %v\n", opts.Generation)
 	emoji.Printf(":earth_asia:World Size (Width*height): %v*%v\n", opts.Width, opts.Height)
-	emoji.Printf(":boom:Mutation Rate: %v/100\n", opts.MutRate)
+	emoji.Printf(":boom:Mutation Rate: %v%\n", opts.MutRate)
 	emoji.Printf(":globe_with_meridians:Search Keyword: %v\n", opts.Keyword)
 	emoji.Printf(":sun_with_face:Tweet locations: %v\n\n", opts.Location)
+	if opts.Chaos {
+		emoji.Println(":smiling_imp:Chaos mode ON")
+	}
 }
 
 func (g *Game) initGameStatus() {

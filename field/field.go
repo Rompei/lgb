@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"github.com/Rompei/lgb/point"
 	"github.com/Rompei/lgb/utils"
+	"github.com/ikawaha/kagome/tokenizer"
 	"github.com/olekukonko/tablewriter"
 	"math/rand"
 	"os"
+	"regexp"
 	"strconv"
 	"time"
 )
@@ -204,6 +206,86 @@ func (f *Field) GetAliveCells(x, y int) int {
 	}
 	return sum
 
+}
+
+// CrossParents cross parent cell's tweet
+func (f *Field) CrossParents(x, y int, newTweet string) (string, error) {
+	if x == 0 || x == f.SizeX-1 || y == 0 || y == f.SizeY-1 {
+		return "", errors.New("Invalid cell.")
+	}
+
+	var tweets []string
+	if f.Points[y-1][x-1].IsAlive {
+		tweets = append(tweets, f.Points[y-1][x-1].Str)
+	}
+	if f.Points[y-1][x].IsAlive {
+		tweets = append(tweets, f.Points[y-1][x].Str)
+	}
+	if f.Points[y-1][x+1].IsAlive {
+		tweets = append(tweets, f.Points[y-1][x+1].Str)
+	}
+	if f.Points[y][x-1].IsAlive {
+		tweets = append(tweets, f.Points[y][x-1].Str)
+	}
+	if f.Points[y][x+1].IsAlive {
+		tweets = append(tweets, f.Points[y][x+1].Str)
+	}
+	if f.Points[y+1][x-1].IsAlive {
+		tweets = append(tweets, f.Points[y+1][x-1].Str)
+	}
+	if f.Points[y+1][x].IsAlive {
+		tweets = append(tweets, f.Points[y+1][x].Str)
+	}
+	if f.Points[y+1][x+1].IsAlive {
+		tweets = append(tweets, f.Points[y+1][x+1].Str)
+	}
+
+	re1, err := regexp.Compile(`(^|\s)(@|https?://)\S+`)
+	if err != nil {
+		return "", err
+	}
+	re2, err := regexp.Compile(`^\s*|\s*$`)
+	if err != nil {
+		return "", err
+	}
+
+	t := tokenizer.New()
+	newTweet = re2.ReplaceAllString(re1.ReplaceAllString(newTweet, ""), "")
+	originTweetTokens := t.Tokenize(newTweet)
+	var parentTweetsTokens [][]tokenizer.Token
+	for i, v := range tweets {
+		tweets[i] = re2.ReplaceAllString(re1.ReplaceAllString(v, ""), "")
+		parentTweetsTokens = append(parentTweetsTokens, t.Tokenize(tweets[i]))
+	}
+
+	parentPtr := 0
+	for i, ot := range originTweetTokens {
+		if ot.Class == tokenizer.DUMMY {
+			continue
+		}
+		for _, t := range parentTweetsTokens[parentPtr] {
+			if t.Class != tokenizer.DUMMY && ot.Features()[0] == t.Features()[0] && ot.Features()[1] == t.Features()[1] {
+				originTweetTokens[i] = t
+				parentPtr++
+				break
+			}
+		}
+		if parentPtr == len(parentTweetsTokens)-1 {
+			parentPtr = 0
+		}
+	}
+
+	generatedTweet := ""
+	for _, t := range originTweetTokens {
+		if t.Class != tokenizer.DUMMY {
+			generatedTweet += t.Surface
+		}
+	}
+	if generatedTweet == "" {
+		generatedTweet = "からの"
+	}
+
+	return generatedTweet, nil
 }
 
 //ShowFieldInfo : Debug function
