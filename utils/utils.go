@@ -6,9 +6,9 @@ import (
 )
 
 // CheckRate retuns boolean value from given rate
-func CheckRate(rate int) bool {
+func CheckRate(rate float64) bool {
 	rand.Seed(time.Now().UnixNano())
-	if rand.Intn(100) < rate {
+	if float64(rand.Intn(100)) < rate {
 		return true
 	}
 	return false
