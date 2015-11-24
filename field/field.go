@@ -26,7 +26,7 @@ type Field struct {
 // @Param aliveRate 初期化時の生存率
 // @Param strs      文字
 // return Field
-func NewField(sizeX, sizeY, aliveRate int) (*Field, int, error) {
+func NewField(sizeX, sizeY int, aliveRate float64) (*Field, int, error) {
 	aliveNum := 0
 	f := initField(sizeX, sizeY)
 	f.Points = make([][]point.Point, sizeY)

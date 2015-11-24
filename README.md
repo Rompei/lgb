@@ -19,7 +19,7 @@ Application Options:
   -w, --width=               Field width (default: 160)
   -h, --height=              Field height (default: 90)
   -a, --alive-rate=          The rate of alive cells in initialization (default: 50)
-  -m, --mut-rate=            The rate of mutation (default: 1)
+  -m, --mut-rate=            The rate of mutation (default: 1.0)
   -g, --generation=          Reguration of generations
   -k, --keyword=             Keyword for twitter
   -l, --location=            Tweet location(Default: Japan) (default: 132.2,29.9,146.2,39.0,138.4,33.5,146.1,46.20)

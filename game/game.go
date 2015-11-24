@@ -17,7 +17,7 @@ type Game struct {
 	field      *field.Field
 	tweetCh    chan string
 	finishFlag bool
-	mutRate    int
+	mutRate    float64
 	regGen     int
 	gameStatus *GameStatus
 	debug      bool
@@ -203,20 +203,20 @@ func (g *Game) mutation(nextField *field.Field, x, y int) {
 	tweet := g.getTweets(1)[0]
 	nextField.AddPoint(x, y, tweet)
 	if g.debug {
-		emoji.Printf(":boom:Points[%v][%v] generated spontaneously!!!\n with %v\n", x, y, tweet)
+		emoji.Printf(":boom:Points[%v][%v] generated spontaneously!!! with %v\n", x, y, tweet)
 	}
 }
 
 func (*Game) showGameInfo(opts *options.Options) {
 	emoji.Println(":bell::bell::bell:Game Info:bell::bell::bell::")
-	emoji.Printf(":seedling:Initial Alive Rate: %v%\n", opts.AliveRate)
+	emoji.Printf(":seedling:Initial Alive Rate: %v%%\n", opts.AliveRate)
 	emoji.Printf(":family:Reguration of Generations: %v\n", opts.Generation)
 	emoji.Printf(":earth_asia:World Size (Width*height): %v*%v\n", opts.Width, opts.Height)
-	emoji.Printf(":boom:Mutation Rate: %v%\n", opts.MutRate)
+	emoji.Printf(":boom:Mutation Rate: %v%%\n", opts.MutRate)
 	emoji.Printf(":globe_with_meridians:Search Keyword: %v\n", opts.Keyword)
-	emoji.Printf(":sun_with_face:Tweet locations: %v\n\n", opts.Location)
+	emoji.Printf(":sun_with_face:Tweet locations: %v\n", opts.Location)
 	if opts.Chaos {
-		emoji.Println(":smiling_imp:Chaos mode ON")
+		emoji.Println(":smiling_imp:Chaos mode ON\n")
 	}
 }
 
