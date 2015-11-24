@@ -159,6 +159,7 @@ func (g *Game) step() {
 					emoji.Printf(":baby:Points[%v][%v] generated and Fetched tweet: %v\n", x, y, tweet)
 				}
 				if g.isChaos {
+					// カオスモード
 					crossedTweet, err := g.field.CrossParents(x, y, tweet)
 					if err != nil {
 						panic(err)

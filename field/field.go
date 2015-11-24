@@ -210,6 +210,9 @@ func (f *Field) GetAliveCells(x, y int) int {
 
 // CrossParents cross parent cell's tweet
 func (f *Field) CrossParents(x, y int, newTweet string) (string, error) {
+
+	// 親を交配する
+
 	if x == 0 || x == f.SizeX-1 || y == 0 || y == f.SizeY-1 {
 		return "", errors.New("Invalid cell.")
 	}
@@ -258,6 +261,7 @@ func (f *Field) CrossParents(x, y int, newTweet string) (string, error) {
 		parentTweetsTokens = append(parentTweetsTokens, t.Tokenize(tweets[i]))
 	}
 
+	// 親から1品詞ずつ受け継ぐ
 	parentPtr := 0
 	for i, ot := range originTweetTokens {
 		if ot.Class == tokenizer.DUMMY {
@@ -282,6 +286,7 @@ func (f *Field) CrossParents(x, y int, newTweet string) (string, error) {
 		}
 	}
 	if generatedTweet == "" {
+		// 入っていない場合は｢からの｣で埋める
 		generatedTweet = "からの"
 	}
 
