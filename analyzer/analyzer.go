@@ -1,4 +1,4 @@
-package analizer
+package analyzer
 
 import (
 	"errors"
@@ -10,24 +10,24 @@ import (
 	"time"
 )
 
-// Analizer object
-type Analizer struct {
+// Analyzer object
+type Analyzer struct {
 	targets         []string
 	analizedTargets []string
 	table           [][]string
 }
 
-// NewAnalizer : Constructor of Analizer
+// NewAnalyzer : Constructor of Analyzer
 // @Param targets ツイートリスト
-// return Analizer
-func NewAnalizer(targets []string) *Analizer {
-	return &Analizer{
+// return Analyzer
+func NewAnalyzer(targets []string) *Analyzer {
+	return &Analyzer{
 		targets: targets,
 	}
 }
 
 // EscapeTargets escape Twitter meta strings
-func (a *Analizer) EscapeTargets() error {
+func (a *Analyzer) EscapeTargets() error {
 
 	// リプライとURLをエスケープ
 
@@ -52,12 +52,12 @@ func (a *Analizer) EscapeTargets() error {
 }
 
 // GetTarget returns a target
-func (a *Analizer) GetTarget(index int) string {
+func (a *Analyzer) GetTarget(index int) string {
 	return a.targets[index]
 }
 
 // ShowTargets shows all strings
-func (a *Analizer) ShowTargets() error {
+func (a *Analyzer) ShowTargets() error {
 
 	if len(a.targets) == 0 {
 		return errors.New("There was not targets")
@@ -71,7 +71,7 @@ func (a *Analizer) ShowTargets() error {
 }
 
 //ShowAnalizedTargets shows all analized target
-func (a *Analizer) ShowAnalizedTargets() error {
+func (a *Analyzer) ShowAnalizedTargets() error {
 
 	if len(a.targets) == 0 || len(a.analizedTargets) == 0 {
 		return errors.New("Targets was not be anaziled.")
@@ -84,7 +84,7 @@ func (a *Analizer) ShowAnalizedTargets() error {
 }
 
 // AnalizeTargets analize target strings
-func (a *Analizer) AnalizeTargets() error {
+func (a *Analyzer) AnalizeTargets() error {
 
 	// 分かち書き
 
@@ -105,7 +105,7 @@ func (a *Analizer) AnalizeTargets() error {
 }
 
 // Malcov generates sentences with malcov chain
-func (a *Analizer) Malcov() (string, error) {
+func (a *Analyzer) Malcov() (string, error) {
 
 	// 新文章生成
 
@@ -146,7 +146,7 @@ func (a *Analizer) Malcov() (string, error) {
 	return result, nil
 }
 
-func (a *Analizer) findNext(keys []string) ([]string, error) {
+func (a *Analyzer) findNext(keys []string) ([]string, error) {
 	var results = []string{}
 	for _, v := range a.table {
 		if v[0] == keys[0] && v[1] == keys[1] {
@@ -161,7 +161,7 @@ func (a *Analizer) findNext(keys []string) ([]string, error) {
 	return results, nil
 }
 
-func (a *Analizer) getRandomValue(values []string) string {
+func (a *Analyzer) getRandomValue(values []string) string {
 	rand.Seed(time.Now().UnixNano())
 	return values[rand.Intn(len(values))]
 }

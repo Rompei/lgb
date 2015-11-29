@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/Rompei/lgb/analizer"
+	"github.com/Rompei/lgb/analyzer"
 	"github.com/Rompei/lgb/game"
 	"github.com/Rompei/lgb/options"
 	"github.com/Rompei/lgb/twitter"
@@ -43,17 +43,17 @@ func main() {
 	}
 
 	// 生き残ったツイートを処理する
-	analizer := analizer.NewAnalizer(results)
-	err = analizer.EscapeTargets()
+	analyzer := analyzer.NewAnalyzer(results)
+	err = analyzer.EscapeTargets()
 	if opts.Debug {
-		err = analizer.ShowTargets()
+		err = analyzer.ShowTargets()
 	}
-	err = analizer.AnalizeTargets()
+	err = analyzer.AnalizeTargets()
 	if opts.Debug {
-		err = analizer.ShowAnalizedTargets()
+		err = analyzer.ShowAnalizedTargets()
 	}
 	checkError(err)
-	newText, err := analizer.Malcov()
+	newText, err := analyzer.Malcov()
 	checkError(err)
 
 	emoji.Printf("\n:beer:Generated Text: \n%v\n\n", newText)
