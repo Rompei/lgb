@@ -67,11 +67,36 @@ func main() {
 
 	// ツイートする
 	rest := twitter.NewRest(info, newText)
-	if opts.Hujiwara {
+	if opts.Fujiwara {
+
+		// 藤原モード
 		emoji.Println(":bomb:Making tweet Fujiwara Tatsuya taste...")
-		err := rest.ConvertFujiwara()
+		newText, err = rest.ConvertFujiwara()
 		checkError(err)
 	}
+	if opts.TNOK {
+
+		// TNOKモード
+		emoji.Println(":car:Making tweet prologue of...")
+		newText = rest.ConvertTNOK()
+	}
+
+	if opts.Fujiwara || opts.TNOK {
+
+		// 藤原モード、TNOKモードがtrueの場合はもう一度聞く
+
+		emoji.Printf(":beer:Generated tweet: %v\n\n", newText)
+		ok, err := tellYesNo("Would you like to tweet?>")
+		checkError(err)
+		if ok {
+			tweet(rest)
+		}
+	} else {
+		tweet(rest)
+	}
+}
+
+func tweet(rest *twitter.Rest) {
 	result, err := rest.PostTweet()
 	checkError(err)
 	tweetURL := fmt.Sprintf("https://twitter.com/%v/status/%v", result.User.IdStr, result.IdStr)
