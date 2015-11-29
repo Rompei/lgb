@@ -70,15 +70,15 @@ func (a *Analyzer) ShowTargets() error {
 	return nil
 }
 
-//ShowAnalizedTargets shows all analyzed target
-func (a *Analyzer) ShowAnalizedTargets() error {
+//ShowAnalyzedTargets shows all analyzed target
+func (a *Analyzer) ShowAnalyzedTargets() error {
 
 	if len(a.targets) == 0 || len(a.analyzedTargets) == 0 {
 		return errors.New("Targets was not be anaziled.")
 	}
 
 	for i, t := range a.analyzedTargets {
-		emoji.Printf(":star2:Index: %v, Analized target: %v\n", i, t)
+		emoji.Printf(":star2:Index: %v, Analyzed target: %v\n", i, t)
 	}
 	return nil
 }

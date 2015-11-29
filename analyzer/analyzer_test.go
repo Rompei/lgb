@@ -19,7 +19,7 @@ func TestEscaapeTargets(t *testing.T) {
 	}
 
 	for _, v := range targets {
-		a := NewAnzlyzer([]string{v})
+		a := NewAnalyzer([]string{v})
 		a.EscapeTargets()
 
 		if strings.Contains(a.GetTarget(0), "@test") {

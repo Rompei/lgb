@@ -13,6 +13,7 @@ type Options struct {
 	Table             bool    `short:"t" long:"table" description:"View type"`
 	Speed             bool    `short:"s" long:"speed" description:"Spead mode"`
 	Chaos             bool    `short:"c" long:"chaos" description:"Chaos mode"`
+	Hujiwara          bool    `short:"f" long:"fujiwara" description:"Hujiwara Tatsuya mode"`
 	ConsumerKey       string  `long:"consumer-key" description:"Twitter consumer key"`
 	ConsumerSecret    string  `long:"consumer-secret" description:"Twitter consumer secret"`
 	AccessToken       string  `long:"access-token" description:"Twitter access token"`

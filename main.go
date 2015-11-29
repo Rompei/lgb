@@ -50,7 +50,7 @@ func main() {
 	}
 	err = analyzer.AnalizeTargets()
 	if opts.Debug {
-		err = analyzer.ShowAnalizedTargets()
+		err = analyzer.ShowAnalyzedTargets()
 	}
 	checkError(err)
 	newText, err := analyzer.Malcov()
@@ -66,8 +66,13 @@ func main() {
 	}
 
 	// ツイートする
-	rest := twitter.NewRest(info)
-	result, err := rest.PostTweet(newText)
+	rest := twitter.NewRest(info, newText)
+	if opts.Hujiwara {
+		emoji.Println(":bomb:Making tweet Fujiwara Tatsuya taste...")
+		err := rest.ConvertFujiwara()
+		checkError(err)
+	}
+	result, err := rest.PostTweet()
 	checkError(err)
 	tweetURL := fmt.Sprintf("https://twitter.com/%v/status/%v", result.User.IdStr, result.IdStr)
 	emoji.Printf(":beers:Posted the Tweet. You can see from: %v\n", tweetURL)
