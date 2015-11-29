@@ -13,7 +13,7 @@ import (
 // Analyzer object
 type Analyzer struct {
 	targets         []string
-	analizedTargets []string
+	analyzedTargets []string
 	table           [][]string
 }
 
@@ -70,14 +70,14 @@ func (a *Analyzer) ShowTargets() error {
 	return nil
 }
 
-//ShowAnalizedTargets shows all analized target
+//ShowAnalizedTargets shows all analyzed target
 func (a *Analyzer) ShowAnalizedTargets() error {
 
-	if len(a.targets) == 0 || len(a.analizedTargets) == 0 {
+	if len(a.targets) == 0 || len(a.analyzedTargets) == 0 {
 		return errors.New("Targets was not be anaziled.")
 	}
 
-	for i, t := range a.analizedTargets {
+	for i, t := range a.analyzedTargets {
 		emoji.Printf(":star2:Index: %v, Analized target: %v\n", i, t)
 	}
 	return nil
@@ -97,7 +97,7 @@ func (a *Analyzer) AnalizeTargets() error {
 		tokens := t.Tokenize(v)
 		for _, token := range tokens {
 			if token.Class != tokenizer.DUMMY {
-				a.analizedTargets = append(a.analizedTargets, token.Surface)
+				a.analyzedTargets = append(a.analyzedTargets, token.Surface)
 			}
 		}
 	}
@@ -109,16 +109,16 @@ func (a *Analyzer) Malcov() (string, error) {
 
 	// 新文章生成
 
-	if len(a.targets) == 0 || len(a.analizedTargets) == 0 {
+	if len(a.targets) == 0 || len(a.analyzedTargets) == 0 {
 		return "", errors.New("Targets was not be anaziled.")
 	}
 
 	// テーブル作成
-	for i := 0; i < len(a.analizedTargets)-2; i++ {
+	for i := 0; i < len(a.analyzedTargets)-2; i++ {
 		j := i
 		cell := make([]string, 3)
 		for k := 0; k < 3; k++ {
-			cell[k] = a.analizedTargets[j]
+			cell[k] = a.analyzedTargets[j]
 			j++
 		}
 		a.table = append(a.table, cell)
