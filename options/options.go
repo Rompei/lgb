@@ -13,8 +13,9 @@ type Options struct {
 	Table             bool    `short:"t" long:"table" description:"View type"`
 	Speed             bool    `short:"s" long:"speed" description:"Spead mode"`
 	Chaos             bool    `short:"c" long:"chaos" description:"Chaos mode"`
-	Fujiwara          bool    `short:"f" long:"fujiwara" description:"Fujiwara Tatsuya mode"`
-	TNOK              bool    `short:"i" long:"tnok" description:"Make tweet prologue of..."`
+	Fujiwara          bool    `short:"f" long:"fujiwara" description:"Fujiwara mode"`
+	TNOK              bool    `short:"i" long:"tnok" description:"TNOK mode"`
+	Nyanpass          bool    `short:"n" long:"nyanpass" description:"Nyanpass mode"`
 	ConsumerKey       string  `long:"consumer-key" description:"Twitter consumer key"`
 	ConsumerSecret    string  `long:"consumer-secret" description:"Twitter consumer secret"`
 	AccessToken       string  `long:"access-token" description:"Twitter access token"`

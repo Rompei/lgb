@@ -47,13 +47,23 @@ func (r *Rest) ConvertFujiwara() (string, error) {
 
 // ConvertTNOK makes tweet TNOK
 func (r *Rest) ConvertTNOK() string {
-	ru := []rune(r.text)
 	if utf8.RuneCountInString(r.text) > 65 {
+		ru := []rune(r.text)
 		r.text = string(ru[:65])
 	}
 	r.text = fmt.Sprintf("%v疲れからか不幸にも、黒塗りの高級車に追突してしまう後輩をかばいすべての責任を負った三浦に対し、車の主、暴力団員谷岡に言い渡された示談の条件とは...。", r.text)
 	return r.text
 
+}
+
+// ConvertNyanpass convert tweet to Nyanpass
+func (r *Rest) ConvertNyanpass() string {
+	if utf8.RuneCountInString(r.text) > 134 {
+		ru := []rune(r.text)
+		r.text = string(ru[:134])
+	}
+	r.text = fmt.Sprintf("にゃんぱすー%v", r.text)
+	return r.text
 }
 
 func (r *Rest) trimTweet() bool {
