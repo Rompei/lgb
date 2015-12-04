@@ -27,8 +27,9 @@ Application Options:
   -t, --table                View type
   -s, --speed                Spead mode
   -c, --chaos                Chaos mode
-  -f, --fujiwara             Fujiwara Tatsuya mode
-  -i, --tnok                 Make tweet prologue of...
+  -f, --fujiwara             Fujiwara mode
+  -i, --tnok                 TNOK mode
+  -n, --nyanpass             Nyanpass mode
       --consumer-key=        Twitter consumer key
       --consumer-secret=     Twitter consumer secret
       --access-token=        Twitter access token
