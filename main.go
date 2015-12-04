@@ -80,8 +80,12 @@ func main() {
 		emoji.Println(":car:Making tweet prologue of...")
 		newText = rest.ConvertTNOK()
 	}
+	if opts.Nyanpass {
+		emoji.Println(":cat:Adding Nyanpass in front of tweet...")
+		newText = rest.ConvertNyanpass()
+	}
 
-	if opts.Fujiwara || opts.TNOK {
+	if opts.Fujiwara || opts.TNOK || opts.Nyanpass {
 
 		// 藤原モード、TNOKモードがtrueの場合はもう一度聞く
 
