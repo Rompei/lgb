@@ -1,7 +1,6 @@
 #Life Game Bot
 
 
-##Description
 Life Game Bot is a twitter bot based on Life Game with cellular automaton and Malcov chain.
 
 ##Install
@@ -30,6 +29,7 @@ Application Options:
   -f, --fujiwara             Fujiwara mode
   -i, --tnok                 TNOK mode
   -n, --nyanpass             Nyanpass mode
+  -b, --bot                  Bot mode skip user confirmation
       --consumer-key=        Twitter consumer key
       --consumer-secret=     Twitter consumer secret
       --access-token=        Twitter access token
