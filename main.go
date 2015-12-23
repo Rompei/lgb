@@ -59,10 +59,12 @@ func main() {
 	emoji.Printf("\n:beer:Generated Text: \n%v\n\n", newText)
 
 	// ツイートするか尋ねる
-	isDoTweet, err := tellYesNo("Would you like to tweet?> ")
-	checkError(err)
-	if !isDoTweet {
-		os.Exit(0)
+	if !opts.Bot {
+		isDoTweet, err := tellYesNo("Would you like to tweet?> ")
+		checkError(err)
+		if !isDoTweet {
+			os.Exit(0)
+		}
 	}
 
 	// ツイートする
@@ -81,11 +83,13 @@ func main() {
 		newText = rest.ConvertTNOK()
 	}
 	if opts.Nyanpass {
+
+		// にゃんぱすモード
 		emoji.Println(":cat:Adding Nyanpass in front of tweet...")
 		newText = rest.ConvertNyanpass()
 	}
 
-	if opts.Fujiwara || opts.TNOK || opts.Nyanpass {
+	if !opts.Bot && (opts.Fujiwara || opts.TNOK || opts.Nyanpass) {
 
 		// 藤原モード、TNOKモードがtrueの場合はもう一度聞く
 
